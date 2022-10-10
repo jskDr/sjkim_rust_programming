@@ -18,7 +18,29 @@ fn eg_type_converting_by_as() {
     println!("i = {}, ui = {}", i, ui);
 }
 
+fn option_type() {
+    let a: Option<i32>;
+    a = None;
+    match a {
+        Some(x) => println!("a = Some({})", x),
+        None => println!("a = None"),
+    }
+
+    let b = Some(1);
+    match b {
+        Some(x) => println!("b = Some({})", x),
+        None => println!("b = None"),
+    }
+}
+
 fn main() {
     eg_variable_type_define();
+    println!();
+
     eg_type_converting_by_as();
+    println!();
+
+    println!("Option type:");
+    option_type();
+    println!();
 }
