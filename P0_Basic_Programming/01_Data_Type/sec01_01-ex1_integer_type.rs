@@ -33,6 +33,17 @@ fn option_type() {
     }
 }
 
+enum List {
+    Cons(i32, Box<List>),
+    Nil,
+}
+
+use crate::List::{Cons, Nil};
+
+fn box_type() {
+    let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
+}
+
 fn main() {
     eg_variable_type_define();
     println!();
@@ -42,5 +53,9 @@ fn main() {
 
     println!("Option type:");
     option_type();
+    println!();
+
+    println!("Box type:");
+    box_type();
     println!();
 }
