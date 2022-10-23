@@ -31,6 +31,23 @@ fn option_type() {
         Some(x) => println!("b = Some({})", x),
         None => println!("b = None"),
     }
+
+    let c = Some(1);
+    match c {
+        Some(x) => {
+            println!("b = Some({})", x);
+            println!("c.unwrap - 1 = {}", c.unwrap() - 1);
+        }
+        None => println!("b = None"),
+    }
+}
+
+fn box_type() {
+    let a = Box::new(1);
+    let b = 2;
+    let c = *a + b;
+    println!("a = {}", a); // println solves unwrap of Box automatically
+    println!("c = {}", c);
 }
 
 fn main() {
@@ -42,5 +59,9 @@ fn main() {
 
     println!("Option type:");
     option_type();
+    println!();
+
+    println!("Box type:");
+    box_type();
     println!();
 }
