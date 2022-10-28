@@ -44,6 +44,8 @@ fn box_type() {
     let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
 }
 
+fn array_type()
+
 fn main() {
     eg_variable_type_define();
     println!();
@@ -57,5 +59,9 @@ fn main() {
 
     println!("Box type:");
     box_type();
+    println!();
+
+    println!("Array type:");
+    array_type();
     println!();
 }
