@@ -36,7 +36,25 @@ fn print_preorder(root: &BTN) {
     println!();
 }
 
+fn today_tip() {
+    println!("Today's tip: if let");
+    let i = Some(1);
+    if let Some(j) = &i {
+        println!("{}", j);
+    } 
+    let i: Option<i32> = None;
+    if let Some(j) = &i {
+        println!("{}", j);
+    } else {
+        println!("None");
+    }
+    println!();
+}
+
 fn main() {
+    today_tip();
+
+    println!("Preorder of BTN");
     let mut root = BTN::new(1);
     let left = BTN::new(2);
     let right = BTN::new(3);
@@ -64,15 +82,4 @@ fn main() {
         r_right.right = Some(Box::new(right_right));
     }
     print_preorder(&root);
-
-    let i = Some(1);
-    if let Some(j) = &i {
-        println!("{}", j);
-    } 
-    let i: Option<i32> = None;
-    if let Some(j) = &i {
-        println!("{}", j);
-    } 
-
-
 }
