@@ -64,15 +64,4 @@ fn main() {
         r_right.right = Some(Box::new(right_right));
     }
     print_preorder(&root);
-
-    let i = Some(1);
-    if let Some(j) = &i {
-        println!("{}", j);
-    } 
-    let i: Option<i32> = None;
-    if let Some(j) = &i {
-        println!("{}", j);
-    } 
-
-
 }
