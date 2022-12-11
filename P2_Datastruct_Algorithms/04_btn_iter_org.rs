@@ -61,9 +61,58 @@ fn print_preorder2(root: &BTN) {
     println!();
 }
 
-fn main() {
-    // today_tip();
+// use vecdequeue
+use std::collections::VecDeque;
 
+fn print_listorder(root: &BTN) {
+    // let mut stack = vec![root];
+    let mut queue = VecDeque::new();
+    queue.push_back(root);
+    while let Some(node) = queue.pop_front() {
+        print!("{} ", node.data);
+        if let Some(left) = &node.left {
+            queue.push_back(left);
+        }
+        if let Some(right) = &node.right {
+            queue.push_back(right);
+        }
+    }
+    println!();
+}
+
+
+fn print_inorder(root: &BTN) {
+    let mut stack: Vec<&BTN> = Vec::new();
+    let mut curr = root; 
+    let mut curr_flag = true;
+    let mut non_empty_flag = true;
+    while curr_flag || non_empty_flag {
+        while curr_flag { 
+            stack.push(curr);
+            if let Some(left) = &curr.left {
+                curr = left;
+            }
+            else {
+                break;
+            }
+        }
+        if let Some(root) = stack.pop() { // stack.pop() is always Option type
+            print!("{} ", root.data);
+            if let Some(right) = &root.right {
+                curr = right;
+                curr_flag = true;
+            } else {
+                curr_flag = false;
+            }    
+            non_empty_flag = true;
+        } else {
+            non_empty_flag = false;
+        } 
+    }
+    println!();
+}
+
+fn main() {
     println!("Preorder of BTN");
     let mut root = BTN::new(1);
     let left = BTN::new(2);
@@ -91,22 +140,12 @@ fn main() {
         right.right = Some(Box::new(right_right));
     }
   
-    // print_preorder2(&root);
     print_preorder(&root);
-}
+    print_preorder2(&root);    
 
+    print_listorder(&root);
 
-fn _today_tip() {
-    println!("Today's tip: if let");
-    let i = Some(1);
-    if let Some(j) = &i {
-        println!("{}", j);
-    } 
-    let i: Option<i32> = None;
-    if let Some(j) = &i {
-        println!("{}", j);
-    } else {
-        println!("None");
-    }
-    println!();
+    print_inorder(&root);    
+
+    // print_postorder(&root);
 }

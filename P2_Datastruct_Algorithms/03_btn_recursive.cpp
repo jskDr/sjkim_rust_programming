@@ -8,6 +8,7 @@ struct btn {
     btn *right;
 };
 
+// recursive
 void preorder_traversal(btn *root) {
     if (root == NULL) {
         return;

@@ -56,13 +56,10 @@ fn main() {
     // left: Option<Box<BTN>>
     // root->letf = left // Null
     root.data = 1;
-    root.left = None; // Some(Box::new(left));
+    root.left = Some(Box::new(left));
     root.right = Some(Box::new(right));
     // Option : None, Some(x)
-    // root.left.as_mut().unwrap().left = Some(Box::new(left_left));
-    if let Some(left) = &mut root.left {
-        left.left = Some(Box::new(left_left));
-    }
+    root.left.as_mut().unwrap().left = Some(Box::new(left_left));
     root.right.as_mut().unwrap().right = Some(Box::new(right_right));
     print_inorder(&root);
 }

@@ -57,11 +57,18 @@ enum List {
 
 use crate::List::{Cons, Nil};
 
-fn box_type() {
+fn _box_type() {
     let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
 }
 
-fn array_type()
+fn array_type() {
+    let a = [1, 2, 3, 4, 5];
+    let b = [i32; 5]; 
+    let c = [0; 5];
+    println!("a = {:?}", a);
+    println!("b = {:?}", b);
+    println!("c = {:?}", c);
+}
 
 fn main() {
     eg_variable_type_define();
