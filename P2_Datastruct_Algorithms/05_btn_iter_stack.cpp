@@ -173,8 +173,6 @@ void print_postorder3(BTN *root) {
     cout << endl;
 }
 
-
-
 int main() {
     BTN *root = new BTN(1);
     BTN *left = new BTN(2);
