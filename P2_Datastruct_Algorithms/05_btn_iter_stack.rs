@@ -18,20 +18,40 @@ impl BTN {
     }
 }
 
-fn print_preorder(root: &BTN) {
+fn print_listorder(root: &BTN) {
     let mut queue: VecDeque<&BTN> = VecDeque::new();
-    queue.push_back(root);
-    while !queue.is_empty() {
-        let node = queue.pop_front().unwrap();
+    queue.push_back(root); // 1
+    while !queue.is_empty() { // True
+        // queue: (2, 3) -> (3, 4, 5)
+        // stack, queue produce Option type
+        let node = queue.pop_front().unwrap(); // 1
         print!("{} ", node.data);
         if let Some(left) = &node.left {
-            queue.push_back(left);
+            queue.push_back(left); // 2, 4
         }
         if let Some(right) = &node.right {
-            queue.push_back(right);
+            queue.push_back(right); // 3, 5
         }
     } 
     println!();
+}
+
+fn print_preorder(root: &BTN) {
+    // use stack
+    let mut stack: Vec<&BTN> = Vec::new();
+    // let mut queue: VecDeque<&BTN> = VecDeque::new();
+    stack.push(root); 
+    while !stack.is_empty() { 
+        let node = stack.pop().unwrap(); 
+        print!("{} ", node.data); // 1 -> (3,2), 2 -> (3,5,4)  
+        if let Some(right) = &node.right {
+            stack.push(right); 
+        }
+        if let Some(left) = &node.left {
+            stack.push(left);
+        }
+    } 
+    println!();    
 }
 
 fn main() {
@@ -64,6 +84,7 @@ fn main() {
         right.right = Some(Box::new(right_right));
     }
   
+    print_listorder(&root);
     print_preorder(&root);
 }
 
