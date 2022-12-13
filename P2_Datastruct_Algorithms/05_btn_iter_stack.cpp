@@ -40,7 +40,7 @@ void print_preorder2(BTN *root) {
     cout << endl;
 }
 
-void print_listorder(BTN *root) {
+void print_levelorder(BTN *root) {
     queue<BTN*> q;
     q.push(root);
     while (!q.empty()) {
@@ -69,9 +69,39 @@ void print_inorder(BTN *root) {
     cout << endl;
 }
 
-void print_postorder1(BTN *root) { // const BTN *root (not similar to mutable in Rust)
+void print_postorder(BTN *root) { // const BTN *root (not similar to mutable in Rust)
     stack<BTN*> s;
     BTN *cur = root;
+    // 추가 stack을 이용해 cur가 right가 있었던 경우를 구분
+    stack<BTN*> cur_stack;
+    while (cur != nullptr || !s.empty()) {
+        while (cur != nullptr) { 
+            s.push(cur); // (1, 2, 4), (1, 2, 5)
+            cur = cur->left;
+        }
+        cur = s.top(); // 4, 2, 5, 2
+        if (cur->right) { // nullptr, 5, nullptr, 5
+            if (cur_stack.empty() || cur != cur_stack.top()) {
+                cur_stack.push(cur); // (2)
+                cur = cur->right; // 5
+                continue;
+            }
+            else {
+                cur_stack.pop(); // ()
+            }
+        } 
+        cout << cur->val << " "; // 4, 5, 2
+        s.pop(); // (1, 2), (1, 2), (1)
+        cur = nullptr; // , nullptr, 5
+    }
+    cout << endl;
+}
+
+void print_postorder1(BTN *root) { 
+    //const BTN *root is not allowed because of BTN *cur = root. 
+    // So, it is dangerous and *root value, original data, can be innocently changed.
+    stack<BTN*> s;
+    BTN *cur = root; // root should not be const
     while (cur != nullptr || !s.empty()) {
         while (cur != nullptr) {
             s.push(cur);
@@ -122,35 +152,26 @@ void print_postorder2(BTN *root) {
     cout << endl;
 }
 
-
-void print_postorder(BTN *root) {
+void print_postorder3(BTN *root) {
     stack<BTN*> s;
-    BTN *cur = root;
-    // 추가 stack을 이용해 cur가 right가 있었던 경우를 구분
-    stack<BTN*> cur_stack;
+    BTN *cur = root, *top = nullptr;
     while (cur != nullptr || !s.empty()) {
-        while (cur != nullptr) { 
-            s.push(cur); // (1, 2, 4), (1, 2, 5)
-            cur = cur->left;
+        while (cur != nullptr) { // 1, 2, 4, nullptr, 5, nullptr
+            s.push(cur); // (1,2,4), (1,2,5)
+            cur = cur->left; // 2,4,nullptr
         }
         cur = s.top(); // 4, 2, 5, 2
-        if (cur->right) { // nullptr, 5, nullptr, 5
-            if (cur_stack.empty() || cur != cur_stack.top()) {
-                cur_stack.push(cur); // (2)
-                cur = cur->right; // 5
-                continue;
-            }
-            else {
-                cur_stack.pop(); // ()
-            }
-        } 
+        if (cur->right && cur->right != top) { // nullptr, (5 && 5 != 4), (5 && 5 != 5)
+            cur = cur->right; // 5
+            continue;
+        }
         cout << cur->val << " "; // 4, 5, 2
-        s.pop(); // (1, 2), (1, 2), (1)
-        cur = nullptr; // , nullptr, 5
+        s.pop(); // (1,2), (1,2), (1) 
+        top = cur; // top: 4, 5, 2
+        cur = nullptr; // nullptr
     }
     cout << endl;
 }
-
 
 int main() {
     BTN *root = new BTN(1);
@@ -160,7 +181,6 @@ int main() {
     BTN *left_right = new BTN(5);
     BTN *right_left = new BTN(6);
     BTN *right_right = new BTN(7);
-
     
     root->left = left;
     root->right = right;
@@ -169,13 +189,21 @@ int main() {
     right->left = right_left;
     right->right = right_right;
 
+    left->right->left = new BTN(8);
+    left->right->right = new BTN(9);
+
+    cout << "preorder: " << endl;
     print_preorder(root);
     print_preorder2(root);
 
-    print_listorder(root);
-
+    cout << "inorder: " << endl;
     print_inorder(root);    
 
+    cout << "postorder: " << endl;
     print_postorder(root);
     print_postorder2(root);
+    print_postorder3(root);
+
+    cout << "levelorder: " << endl;
+    print_levelorder(root);    
 }

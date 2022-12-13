@@ -18,7 +18,7 @@ impl BTN {
     }
 }
 
-fn print_levelorder(root: &BTN) {
+fn print_listorder(root: &BTN) {
     let mut queue: VecDeque<&BTN> = VecDeque::new();
     queue.push_back(root); // 1
     while !queue.is_empty() { // True
@@ -84,9 +84,7 @@ fn main() {
         right.right = Some(Box::new(right_right));
     }
   
-    println!("Levelorder traversal of BTN");
-    print_levelorder(&root);
-    println!("Preorder traversal of BTN");
+    print_listorder(&root);
     print_preorder(&root);
 }
 
