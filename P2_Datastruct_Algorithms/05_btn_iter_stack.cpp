@@ -192,6 +192,9 @@ int main() {
     left->right->left = new BTN(8);
     left->right->right = new BTN(9);
 
+    cout << "levelorder: " << endl;
+    print_levelorder(root);    
+
     cout << "preorder: " << endl;
     print_preorder(root);
     print_preorder2(root);
@@ -203,7 +206,4 @@ int main() {
     print_postorder(root);
     print_postorder2(root);
     print_postorder3(root);
-
-    cout << "levelorder: " << endl;
-    print_levelorder(root);    
 }
