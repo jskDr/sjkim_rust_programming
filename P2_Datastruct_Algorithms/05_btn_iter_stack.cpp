@@ -69,7 +69,7 @@ void print_inorder(BTN *root) {
     cout << endl;
 }
 
-void print_postorder1(BTN *root) {
+void print_postorder1(BTN *root) { // const BTN *root (not similar to mutable in Rust)
     stack<BTN*> s;
     BTN *cur = root;
     while (cur != nullptr || !s.empty()) {
