@@ -8,14 +8,16 @@ fn check_subsum_rec(set: &Vec<u32>, sum: u32, n: usize) -> bool {
 fn check_subsum_dp_tab(set: &Vec<u32>, sum: u32, n: usize) -> bool {
     // define 2-d array
     let mut tab: Vec<Vec<bool>> = vec![vec![false;sum as usize + 1];n+1];
+    // sum = 3, n = 1 --> tab[2][4] : all false
     for i in 0..n + 1 {
-        tab[i][0] = true; // sum == 0 --> true   
+        tab[i][0] = true; // tab[0][0] = tab[1][0] = true
     }
-    for j in 1..sum as usize + 1 {
+    for j in 1..sum as usize + 1 { // tab[0][1] = tab[0][2] = tab[0][3] = false
         // println!("j = {}", j);
         tab[0][j] = false; // n == 0 but sum(j) > 0 --> false
     }    
-    for i in 1..n {
+    // println!("tab = {:?}", tab);
+    for i in 1..n+1 { 
         for j in 1..sum as usize + 1{
             if set[i-1] > j as u32 {
                 tab[i][j] = tab[i-1][j];
@@ -28,18 +30,20 @@ fn check_subsum_dp_tab(set: &Vec<u32>, sum: u32, n: usize) -> bool {
   }
 
 fn test_subsum(set: &Vec<u32>, sum: u32) {
+    println!("Example: set = {:?} and sum = {}", set, sum);
+
     let result = check_subsum_rec(&set, sum, set.len());
-    println!("Recursive: test_subsum with sum = {:?} with {} -> {}", set, sum, result);
+    println!("Recursive method result -> {}", result);
 
     let result = check_subsum_dp_tab(&set, sum, set.len());
-    println!("DP(Tabulation): test_subsum with sum = {:?} with {} -> {}", set, sum, result);
+    println!("DP(Tabulation) result -> {}", result);
 }
 
-fn test_recursive_method() {
+fn test_subsum_all_examples() {
     // subset sum problem
-    let set: Vec<u32> = vec![3]; 
-    test_subsum(&set, 3);
-    test_subsum(&set, 3);
+    let set: Vec<u32> = vec![3, 34, 4, 12, 5, 2]; 
+    test_subsum(&set, 9);
+    test_subsum(&set, 30);
 }
 
 fn fib_dp_tab(n: u32) -> u32 { // n: 10
@@ -71,7 +75,6 @@ impl Fib {
     }    
 }
 
-
 fn test_dynamic_programming_fibonacci() {
     let n: u32 = 10;
     // tabulation method
@@ -84,12 +87,14 @@ fn test_dynamic_programming_fibonacci() {
     println!("fib_dp_memo.calc({n}) = {}", result);
 }
 
-
 fn main() {
-    // recursive method
-    test_recursive_method();
+    // subsum problem with both recursive and dynamic programming  
+    println!("Check subset sum problem");
+    test_subsum_all_examples();
+    println!();
 
     // dynamic programming
     // fibonacci sequence
+    println!("Find fibonacci sequence");
     test_dynamic_programming_fibonacci();
 }
