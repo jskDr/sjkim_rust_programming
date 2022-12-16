@@ -5,21 +5,41 @@ fn check_subsum_rec(set: &Vec<u32>, sum: u32, n: usize) -> bool {
     else { check_subsum_rec(&set, sum, n-1) || check_subsum_rec(&set, sum - set[n-1], n-1)}
 }
 
-// fn check_subsum_dp_tab
+fn check_subsum_dp_tab(set: &Vec<u32>, sum: u32, n: usize) -> bool {
+    // define 2-d array
+    let mut tab: Vec<Vec<bool>> = vec![vec![false;sum as usize + 1];n+1];
+    for i in 0..n + 1 {
+        tab[i][0] = true; // sum == 0 --> true   
+    }
+    for j in 1..sum as usize + 1 {
+        // println!("j = {}", j);
+        tab[0][j] = false; // n == 0 but sum(j) > 0 --> false
+    }    
+    for i in 1..n {
+        for j in 1..sum as usize + 1{
+            if set[i-1] > j as u32 {
+                tab[i][j] = tab[i-1][j];
+            } else {
+                tab[i][j] = tab[i-1][j] || tab[i-1][j - set[i-1] as usize];
+            }
+        }
+    }
+    tab[n][sum as usize]
+  }
 
 fn test_subsum(set: &Vec<u32>, sum: u32) {
     let result = check_subsum_rec(&set, sum, set.len());
-    println!("test_subsum with sum = {:?} -> {}", set, result);
+    println!("Recursive: test_subsum with sum = {:?} with {} -> {}", set, sum, result);
 
-    // let result = check_subsum_dp_tab(&set, sum, set.len());
-    // println!("test_subsum with sum = {:?} -> {}", set, result);
+    let result = check_subsum_dp_tab(&set, sum, set.len());
+    println!("DP(Tabulation): test_subsum with sum = {:?} with {} -> {}", set, sum, result);
 }
 
 fn test_recursive_method() {
     // subset sum problem
-    let set: Vec<u32> = vec![3, 34, 4, 12, 5, 2]; 
-    test_subsum(&set, 9);
-    test_subsum(&set, 30);
+    let set: Vec<u32> = vec![3]; 
+    test_subsum(&set, 3);
+    test_subsum(&set, 3);
 }
 
 fn fib_dp_tab(n: u32) -> u32 { // n: 10
