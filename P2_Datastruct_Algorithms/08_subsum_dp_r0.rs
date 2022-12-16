@@ -1,0 +1,68 @@
+fn check_subsum(set: &[u32;6], sum: u32, n: usize) -> bool {
+    if sum == 0 { true }
+    else if n == 0 { false }
+    else if set[n-1] > sum { check_subsum(&set, sum, n-1) }
+    else { check_subsum(&set, sum, n-1) || check_subsum(&set, sum - set[n-1], n-1)}
+}
+
+fn test_subsum(set: &[u32;6], sum: u32) {
+    let result = check_subsum(&set, sum, set.len());
+    println!("test_subsum with sum = {:?} -> {}", set, result);
+}
+
+fn fib_dp_tab(n: u32) -> u32 { // n: 10
+    // tabulation dynamic programming for fibonacci sequence
+    if n == 0 { return 0; }
+    let mut tab = vec![0; n as usize + 1]; // tab[11]
+    tab[0] = 0;
+    tab[1] = 1;
+    for i in 2..n as usize + 1 { // 2, 3, .. n
+        tab[i] = tab[i-1] + tab[i-2];
+    }
+    tab[n as usize]
+}
+
+struct Fib {
+    memo: Vec<u32>,
+}
+
+impl Fib {
+    fn new(max_n: u32) -> Fib {
+        Fib { memo: vec![0; max_n as usize] }
+    }
+    fn calc(&mut self, n: u32) -> u32 {
+        if n == 0 { return 0; }
+        if n == 1 { return 1; }
+        if self.memo[n as usize] != 0 { return self.memo[n as usize]; }
+        self.memo[n as usize] = self.calc(n-1) + self.calc(n-2);
+        self.memo[n as usize]
+    }    
+}
+
+fn test_dynamic_programming_fibonacci() {
+    let n: u32 = 10;
+    // tabulation method
+    let result = fib_dp_tab(n);
+    println!("fib_dp_tab({n}) = {}", result);
+
+    // memoization method
+    let mut fib_dp_memo: Fib = Fib::new(100);
+    let result = fib_dp_memo.calc(n); // to give a value to object, define mut for a object 
+    println!("fib_dp_memo.calc({n}) = {}", result);
+}
+
+fn test_recursive_method() {
+    // subset sum problem
+    let set: [u32;6] = [3_u32, 34, 4, 12, 5, 2]; 
+    test_subsum(&set, 9);
+    test_subsum(&set, 30);
+}
+
+fn main() {
+    // recursive method
+    test_recursive_method();
+
+    // dynamic programming
+    // fibonacci sequence
+    test_dynamic_programming_fibonacci();
+}
