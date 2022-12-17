@@ -6,11 +6,16 @@ struct BTN {
 }
 
 fn print_inorder(root: &BTN) {
+    // check if there is a left node, if so, call this function on it
     if let Some(left) = &root.left {
+        println!("Left");
         print_inorder(left);
     }
+    // print the data of the current node
     println!("data: {}", root.data);
+    // check if there is a right node, if so, call this function on it
     if let Some(right) = &root.right {
+        println!("Right");
         print_inorder(right);
     }
 }
