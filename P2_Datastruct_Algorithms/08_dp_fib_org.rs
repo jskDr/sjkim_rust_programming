@@ -17,23 +17,21 @@ fn fib_dp_tab(n: u32) -> u32 { // n: 10
 }
 
 struct Fib {
-    memo: Vec<Option<u32>>,
+    memo: Vec<u32>, // Some(x), None
 }
 
 impl Fib {
     fn new(max_n: u32) -> Fib {
-        Fib { memo: vec![None; max_n as usize] }
+        Fib { memo: vec![0; max_n as usize] }
     }
     fn calc(&mut self, n: u32) -> u32 {
-        if let Some(x) = self.memo[n as usize] { 
-            x
-        } else {      
-            if n == 0 { self.memo[n as usize] = Some(0) }  
-            else if n == 1 { self.memo[n as usize] = Some(1) }
-            else { self.memo[n as usize] = Some(self.calc(n-1) + self.calc(n-2)) }
-            self.memo[n as usize].unwrap()
-        }
-    }    
+        if self.memo[n as usize] != 0 {
+            return self.memo[n as usize];
+        } 
+        if n == 1 {self.memo[1] = 1}
+        else if n > 1 {self.memo[n as usize] = self.calc(n-1) + self.calc(n-2)}
+        self.memo[n as usize]
+    }
 }
 
 fn main() {
