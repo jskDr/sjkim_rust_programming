@@ -14,6 +14,4 @@ fn main() {
     let set: [u32;6] = [3_u32, 34, 4, 12, 5, 2]; 
     test_subsum(&set, 9);
     test_subsum(&set, 30);
-    // test_subsum with sum = 9 -> true
-    // test_subsum with sum = 30 -> false
 }
