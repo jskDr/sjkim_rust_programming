@@ -36,7 +36,7 @@ impl Fib {
 fn main() {
     // get n from args[1] with default value 10
     let n = match std::env::args().nth(1) {
-        Some(n) => n.parse::<u32>().unwrap(),
+        Some(n) => n.parse::<u32>().expect("Please input a number"),
         None => 10,
     };
     // let n: u32 = 10;
