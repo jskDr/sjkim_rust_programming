@@ -1,4 +1,4 @@
-use clap::Parser; 
+use clap::Parser;
 
 fn fib_rec(n: u32) -> u32 {
     if n == 0 {0}
@@ -18,21 +18,23 @@ fn fib_dp_tab(n: u32) -> u32 { // n: 10
 }
 
 struct Fib {
-    memo: Vec<u32>, // Some(x), None
+    memo: Vec<Option<u32>>, // Some(x), None
 }
 
 impl Fib {
     fn new(max_n: u32) -> Fib {
-        Fib { memo: vec![0; max_n as usize] }
+        Fib { memo: vec![None; max_n as usize] }
     }
     fn calc(&mut self, n: u32) -> u32 {
-        if self.memo[n as usize] != 0 {
-            return self.memo[n as usize];
-        } 
-        if n == 1 {self.memo[1] = 1}
-        else if n > 1 {self.memo[n as usize] = self.calc(n-1) + self.calc(n-2)}
-        self.memo[n as usize]
-    }
+        if let Some(f) = self.memo[n as usize] {
+            return f;
+        } else {
+            if n == 0 {self.memo[0] = Some(0)}
+            else if n == 1 {self.memo[1] = Some(1)}
+            else {self.memo[n as usize] = Some(self.calc(n-1) + self.calc(n-2))}
+        }
+        self.memo[n as usize].unwrap()
+    }    
 }
 
 #[derive(Parser)]
@@ -44,7 +46,7 @@ struct Opts {
 fn main() {
     // get n from args[1] with default value 10
     let opts = Opts::parse();
-    let n = opts.no;
+    let n: u32 = opts.no;
 
     // let n: u32 = 10;
     // recursive method

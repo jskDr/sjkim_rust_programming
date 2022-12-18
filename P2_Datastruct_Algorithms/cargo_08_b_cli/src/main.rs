@@ -40,14 +40,14 @@ impl Fib {
 #[derive(Parser)]
 struct Opts {
     #[clap(short, long, default_value = "10")]
-    n: u32,
+    no: u32,
 }
 
 fn main() {
     // get n from args[1] with default value 10
     let opts = Opts::parse();
-    let n = opts.n;
-    
+    let n: u32 = opts.no;
+
     // let n: u32 = 10;
     // recursive method
     let result = fib_rec(n);
