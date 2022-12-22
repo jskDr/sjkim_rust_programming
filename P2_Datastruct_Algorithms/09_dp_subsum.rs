@@ -7,7 +7,26 @@ fn check_subsum_rec(set: &Vec<u32>, sum: u32, n: usize) -> bool {
 }
 
 fn check_subsum_dp_tab(set: &Vec<u32>, sum: u32, n: usize) -> bool {
-    true
+    // define 2-d array
+    let mut tab: Vec<Vec<bool>> = vec![vec![false;sum as usize + 1];n+1];
+    // sum = 0 -> all true in tab
+    for i in 0..=n {
+        tab[i][0] = true;
+    }
+    // n = 0 && sum > 0 -> all false in tab
+    for j in 1..=sum as usize {
+        tab[0][j] = false;
+    }
+    for i in 1..=n {
+        for j in 1..=sum as usize {
+            if set[i-1] > j as u32 {
+                tab[i][j] = tab[i-1][j];
+            } else {
+                tab[i][j] = tab[i-1][j] || tab[i-1][j - set[i-1] as usize];
+            }
+        }
+    }
+    tab[n][sum as usize]
 }
 
 fn test_subsum(set: &Vec<u32>, sum: u32) {
