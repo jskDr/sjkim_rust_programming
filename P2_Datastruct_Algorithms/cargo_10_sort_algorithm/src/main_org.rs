@@ -69,7 +69,7 @@ fn pivot(a: &mut Vec<u32>) -> usize {
 } 
 
 fn quicksort(a: &mut Vec<u32>, st: usize, ed: usize) {
-    println!("st:{st}, ed:{ed}");
+    // println!("st:{st}, ed:{ed}");
     if ed - st > 1 {
         let pv = pivot_idx(a, st, ed);
         if pv > st { quicksort(a, st, pv - 1)}
