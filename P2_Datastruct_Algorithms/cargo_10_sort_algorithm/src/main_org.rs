@@ -70,7 +70,7 @@ fn pivot(a: &mut Vec<u32>) -> usize {
 
 fn quicksort(a: &mut Vec<u32>, st: usize, ed: usize) {
     // println!("st:{st}, ed:{ed}");
-    if ed - st > 1 {
+    if ed - st > 0 {
         let pv = pivot_idx(a, st, ed);
         if pv > st { quicksort(a, st, pv - 1)}
         if pv < ed { quicksort(a, pv + 1, ed);}
@@ -85,7 +85,7 @@ fn qsort(a: &mut Vec<u32>) {
 
 fn main() {
     println!("Sort Algoorithms");
-    let a_org: Vec<u32> = vec![7, 8, 3, 9, 4, 1, 0, 2, 5, 6];
+    let a_org: Vec<u32> = vec![7, 8, 3, 7, 4, 1, 0, 2, 5, 6];
     println!("Before Sort: {:?}", a_org);
 
     let mut a_sorted = a_org.clone();
