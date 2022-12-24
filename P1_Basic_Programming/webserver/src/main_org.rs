@@ -1,21 +1,25 @@
 use std::{
-    net::{TcpListener,TcpStream},
-    io::Write, // for strem.write() 
+    net::{TcpListener, TcpStream},
+    io::Write, // for strem.write()
     fs,
 };
 
 fn main() {
-    let listener = TcpListener::bind("localhost:7878").unwrap();
+    // let listener = TcpListener::bind("localhost:7777").unwrap();
+    let listener = match TcpListener::bind("localhost:7777") {
+        Ok(listener) => listener,
+        Err(e) => panic!("Error: {}", e),
+    };
+
     for stream in listener.incoming() {
-        handle_connection(stream.unwrap());
+        webcomm(stream.unwrap());
     }
 }
 
-fn handle_connection(mut stream: TcpStream) {
-    let status_line = "HTTP/1.1 200 OK";
-    let contents = fs::read_to_string("html/hello.html").unwrap();
-    let length = contents.len();
-    let response = format!(
-        "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
-    stream.write(response.as_bytes()).unwrap();
+fn webcomm(mut stream: TcpStream) {
+    let content = fs::read_to_string("html/hello.html").unwrap();
+    let length = content.len();
+    let prefix = format!("HTTP1.2 Ok\r\nContent-Length {length}\r\n\r\n");
+    let output = format!("{prefix}{content}");
+    stream.write(output.as_bytes()).unwrap();
 }
