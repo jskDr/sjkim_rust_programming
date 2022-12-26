@@ -5,10 +5,7 @@ use std::{
 };
 
 fn main() {
-    let listener = match TcpListener::bind("localhost:7878") {
-        Ok(listener) => listener,
-        Err(e) => panic!("Error: {}", e),
-    };
+    let listener = TcpListener::bind("localhost:7878").unwrap();
 
     for stream in listener.incoming() {
         webcomm(stream.unwrap());

@@ -4,12 +4,22 @@ use std::{
     fs,
 };
 
-fn main() {
-    let listener = TcpListener::bind("localhost:7878").unwrap();
-
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // let listener = TcpListener::bind("localhost:7878").unwrap();
+    // let listener = match TcpListener::bind("localhost:7878") {
+    //     Ok(x) => x,
+    //     Err(e) => panic!("Error: {}", e),
+    // };
+    //let listener = match TcpListener::bind("localhost:7878") {
+    //    Ok(x) => x,
+    //    Err(e) => return Err(e.into()),
+    //};
+    let listener = TcpListener::bind("localhost:7878")?;
+    
     for stream in listener.incoming() {
         webcomm(stream.unwrap());
     }
+    Ok(())
 }
 
 fn webcomm(mut stream: TcpStream) {
