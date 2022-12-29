@@ -6,6 +6,7 @@
 #include <iterator>
 #include <vector>
 #include <algorithm>
+#include <unordered_map>
 using namespace std;
 
 // define xyz function with T type
@@ -63,7 +64,16 @@ bool findsetinset_basic(const vector<int> &vec1, const vector<int> &vec2) {
 }
 
 bool findsetinset_hash(const vector<int> vec1, const vector<int> vec2) {
-    return true;
+    unordered_map<int, int> v2_map;
+    for(auto &i: vec2) {
+        v2_map[i] = 1;
+    }
+    int sum = 0;
+    for(auto &i: vec1) {
+        sum += v2_map.count(i);
+    }
+    if(sum==vec2.size()) return true;
+    else return false;
 }
 
 
