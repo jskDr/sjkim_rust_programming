@@ -34,12 +34,7 @@ bool binary_search(vector<int> &vec, int st, int ed, int target) {
     return false;
 }
 
-// Declartion part
 bool findsetinset_bs(const vector<int> &vec1, const vector<int> &vec2) {
-    // To apply binary search, apply sorting first to vec1
-    // Then, apply binary search to vec2
-    // If all elements in vec2 are found in vec1, return true
-    // Otherwise, return false
     vector<int> vec1_clone = vec1;
     sort(vec1_clone.begin(), vec1_clone.end(), less<int>());
     for(auto &i: vec2) {
@@ -63,7 +58,7 @@ bool findsetinset_basic(const vector<int> &vec1, const vector<int> &vec2) {
     return true;
 }
 
-bool findsetinset_hash(const vector<int> vec1, const vector<int> vec2) {
+bool _findsetinset_hash(const vector<int> vec1, const vector<int> vec2) {
     unordered_map<int, int> v2_map;
     for(auto &i: vec2) {
         v2_map[i] = 1;
@@ -74,6 +69,17 @@ bool findsetinset_hash(const vector<int> vec1, const vector<int> vec2) {
     }
     if(sum==vec2.size()) return true;
     else return false;
+}
+
+bool findsetinset_hash(const vector<int> vec1, const vector<int> vec2) {
+    unordered_map<int, int> v2_map;
+    for(auto &i: vec2) {
+        v2_map[i] = 1;
+    }
+    for(auto &i: vec1) {
+        v2_map.erase(i);
+    }
+    return v2_map.size()==0;
 }
 
 
