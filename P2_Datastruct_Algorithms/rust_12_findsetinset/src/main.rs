@@ -1,18 +1,58 @@
 use std::collections::HashMap;
 
 fn binary_search(vec: &Vec<i32>, st: usize, ed: usize, val: i32) -> bool {
-}
-
-fn findsetinset_bs(v1: &Vec<i32>, v2: &Vec<i32>) -> bool {
-    return true;
+    // v1: vec![3, 7, 2, 9, 5]; v2: vec![7, 9, 8]
+    let mid = (st+ed) / 2;
+    if val == vec[mid] {
+        true
+    } else if val < vec[mid] && st + 1 <= mid {
+        binary_search(vec, st, mid - 1, val)
+    } else if val > vec[mid] && mid + 1 <= ed {
+        binary_search(vec, mid + 1, ed, val)
+    } else {
+        false
+    }
+    true
 }
 
 fn findsetinset_basic(v1: &Vec<i32>, v2: &Vec<i32>) -> bool {
+    for val in v2 { // v1: vec![3, 7, 2, 9, 5]; v2: vec![7, 9, 8]
+        let mut i = 0;
+        while i < v1.len() {
+            if *val == v1[i] {
+                break;
+            }
+            i += 1;
+        }
+        if i == v1.len() {
+            return false;
+        }
+    }
+    true
+}
+
+fn findsetinset_bs(v1: &Vec<i32>, v2: &Vec<i32>) -> bool {
+    let mut v1 = v1.clone();
+    v1.sort();
+    for val in v2 {
+        if !binary_search(&v1, 0, v1.len()-1, *val) {
+            return false
+        }
+    }
     true
 }
 
 fn findsetinset_hash(v1: &Vec<i32>, v2: &Vec<i32>) -> bool {
-    true
+    let mut v2_map = HashMap::<i32,i32>::new(); 
+    for val in v2 {
+        v2_map.insert(*val, 1);
+    }
+    for val in v1 {
+        if v2_map.contains_key(val) {
+            v2_map.remove(val);
+        }
+    }
+    v2_map.len() == 0
 }
 
 fn run(v1: Vec<i32>, v2: Vec<i32>, exact_result: bool) {
