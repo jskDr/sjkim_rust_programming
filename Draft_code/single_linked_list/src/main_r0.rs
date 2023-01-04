@@ -56,6 +56,21 @@ impl<T: std::fmt::Display> SinglyLinkedList<T> {
     }
 }
 
+fn _run1() {
+    let node = Node {
+        data: 1,
+        next: None,
+    };
+    println!("{}", node.data);
+
+    let slist = SinglyLinkedList::<i32> {
+        root: Some(Box::new(node))
+    };
+    if let Some(node) = slist.root {
+        println!("{}", node.data);
+    }
+}
+
 fn main() {
     println!("Singely Linked List");
     let mut slist = SinglyLinkedList::<i32>::new();
