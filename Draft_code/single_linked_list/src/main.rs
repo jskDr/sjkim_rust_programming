@@ -1,9 +1,9 @@
 struct Node<T> {
-    data: T,
-    next: Option<Box<Node<T>>>,
+    data: T, // i32, f32, ...
+    next: Option<Box<Node<T>>>, // None, Some(x)
 }
 
-struct SinglyLinkedList<T> {
+struct SinglyLinkedList<T> { // T* root
     root: Option<Box<Node<T>>>
 }
 
@@ -19,8 +19,8 @@ impl<T: std::fmt::Display> SinglyLinkedList<T> {
             data: data,
             next: None
         };
-        match self.root {
-            Some(ref mut n) => {
+        match self.root { // Option<&mut Some<T>> X
+            Some(ref mut n) => { // Some(x) => ref mut
                 let mut node = n;
                 loop {
                     // let mut node = n; // &mut type
@@ -43,7 +43,7 @@ impl<T: std::fmt::Display> SinglyLinkedList<T> {
             loop {
                 match node.next {
                     Some(ref n) => {
-                        print!("{} => ", node.data);
+                        print!("{} -> ", node.data);
                         node = n
                     },
                     None => {
