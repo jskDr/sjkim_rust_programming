@@ -2,30 +2,43 @@
 using namespace std;
 
 template<class T>
-class Node {
+class NodeT {
     public:
     T data;
-    Node *next;
-    Node(T data) {
-        this->data = data;
-        this->next = nullptr;
-    }
+    NodeT *next;
+    NodeT(T data);
 };
+
+template<class T>
+NodeT<T>::NodeT(T data) {
+    this->data = data;
+    this->next = nullptr;
+}
+
+void run_node() {
+    NodeT<int> node = NodeT<int>(10);
+    cout << node.data << endl;
+}
+
+
+
+
+
 
 // define template class
 template<class T>
 class SinglyLinkedList {
     public:
-        Node<T> *p_root;
+        NodeT<T> *p_root;
         SinglyLinkedList() {
             this->p_root = nullptr;
         }
         void append(T data) {
-            Node<T> *p_new_node = new Node(data);
+            NodeT<T> *p_new_node = new NodeT(data);
             if( !this->p_root) 
                 this->p_root = p_new_node;
             else {
-                Node<T> *p_root = this->p_root;
+                NodeT<T> *p_root = this->p_root;
                 while( p_root->next) {
                     p_root = p_root->next;
                 }
@@ -40,8 +53,8 @@ class SinglyLinkedList {
                 delete this->p_root;
                 this->p_root = nullptr;
             } else {
-                Node<T> *p_prev;
-                Node<T> *p_root = this->p_root;
+                NodeT<T> *p_prev;
+                NodeT<T> *p_root = this->p_root;
                 while( p_root->next) {
                     p_prev = p_root;
                     p_root = p_root->next;
@@ -52,7 +65,7 @@ class SinglyLinkedList {
         }
         void print() {
             if(this->p_root) {
-                Node<T> *p_root = this->p_root;
+                NodeT<T> *p_root = this->p_root;
                 while(p_root) {
                     cout << p_root->data;
                     if( p_root->next) cout << " -> ";
@@ -61,13 +74,13 @@ class SinglyLinkedList {
                 cout << endl;
             }
             else {
-                cout << "Error: Empty List Node!" << endl;
+                cout << "Error: Empty List NodeT!" << endl;
             }
         }
 };
 
 
-int main() {
+void run_singly_linked_list() {
     SinglyLinkedList<int> list = SinglyLinkedList<int>();
     list.print();
     
@@ -84,5 +97,10 @@ int main() {
     list.remove_tail();
     list.remove_tail();
     list.print();
+}
+
+int main() {
+    run_node();
+    run_singly_linked_list();
     return 0;
 }
