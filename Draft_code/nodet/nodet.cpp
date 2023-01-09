@@ -27,7 +27,20 @@ void run_node() {
     cout << node.get_data() << endl;
 }
 
+struct Point {
+    int x, y;
+};
+
+void run_point() {
+    Point p = {1, 2};
+    NodeT<Point> node_point = NodeT<Point>(p);
+    cout << node_point.get_data().x << ", " << 
+        node_point.get_data().y << endl;
+    cout << p.x << ", " << p.y << endl;
+}
+
 int main() {
     run_node();
+    run_point();
     return 0;
 }
