@@ -2,9 +2,14 @@
 using namespace std;
 
 template<class T>
-struct Node {
+class Node {
+    public:
     T data;
     Node *next;
+    Node(T data) {
+        this->data = data;
+        this->next = nullptr;
+    }
 };
 
 // define template class
@@ -16,9 +21,7 @@ class SinglyLinkedList {
             this->p_root = nullptr;
         }
         void append(T data) {
-            Node<T> *p_new_node = new Node<T>;
-            p_new_node->data = data;
-            p_new_node->next = nullptr;
+            Node<T> *p_new_node = new Node(data);
             if( !this->p_root) 
                 this->p_root = p_new_node;
             else {
