@@ -33,6 +33,10 @@ struct PointT {
 };
 
 void run_pointt() {
+    // PointT<int> p;
+    // PointT<int> p = PointT<int>();
+    // p.x = 3;
+    // p.y = 4;
     PointT<int> p = {1, 2};
     NodeT<PointT<int>> node_point = NodeT<PointT<int>>(p);
     cout << node_point.get_data().x << ", " << 
