@@ -27,7 +27,22 @@ void run_node() {
     cout << node.get_data() << endl;
 }
 
+template<class T>
+struct PointT {
+    T x, y;
+};
+
+void run_pointt() {
+    PointT<int> p = {1, 2};
+    NodeT<PointT<int>> node_point = NodeT<PointT<int>>(p);
+    cout << node_point.get_data().x << ", " << 
+        node_point.get_data().y << endl;
+
+    cout << p.x << ", " << p.y << endl;
+}
+
 int main() {
     run_node();
+    run_pointt();
     return 0;
 }
